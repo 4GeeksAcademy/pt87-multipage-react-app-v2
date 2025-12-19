@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const BookPage = () => {
   const { id } = useParams();
-  const [book, setBook] = useState({});
+  const [store, dispatch] = useGlobalReducer();
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    const getData = async () => {
+
+  const getBook = () => {
+    return store.books.find((book) => book.id == id);
+  };
+
+  const getData = async () => {
+    if (!getBook()) {
       const resp = await fetch(`https://library.dotlag.space/library/${id}`);
 
       if (!resp.ok) {
@@ -15,17 +20,23 @@ const BookPage = () => {
       }
 
       const data = await resp.json();
-      setBook(data);
-    }
 
+      dispatch({
+        type: "add_book",
+        book: data,
+      });
+    }
+  };
+
+  useEffect(() => {
     getData();
   }, []);
-    
+
   return (
     <div className="container">
       <div className="row">
         <div className="col col-lg-8 offset-lg-2">
-          <h1>{book.title}</h1>
+          <h1>{getBook()?.title}</h1>
         </div>
       </div>
     </div>
