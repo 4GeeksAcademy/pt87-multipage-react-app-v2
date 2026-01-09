@@ -7,22 +7,21 @@ import {
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { HomePage } from "./pages/HomePage";
-import BookPage from "./pages/BookPage";
+import SingleBookPage from "./pages/SingleBookPage";
 import AuthorPage from "./pages/AuthorPage";
+import SingleAuthorPage from "./pages/SingleAuthorPage";
+import BookCreationPage from "./pages/BookCreationPage";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    // CreateRoutesFromElements function allows you to build route elements declaratively.
-    // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
-    // Root, on the contrary, create a sister Route, if you have doubts, try it!
-    // Note: keep in mind that errorElement will be the default page when you don't get a route, customize that page to make your project more attractive.
-    // Note: The child paths of the Layout element replace the Outlet component with the elements contained in the "element" attribute of these child paths.
-
-    // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>}>
       <Route path="/" element={<HomePage />} />
-      <Route path="/books/:id" element={<BookPage />} />
-      <Route path="/authors/:id" element={<AuthorPage />} />
+      {/* Book Pages */}
+      <Route path="/books/:id" element={<SingleBookPage />} />
+      <Route path="/books/new" element={<BookCreationPage />} />
+      {/* Author Pages */}
+      <Route path="/author" element={<AuthorPage />} />
+      <Route path="/author/:name" element={<SingleAuthorPage />} />
     </Route>
   )
 );
