@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 import BookDetails from "../components/BookDetails";
+import ReadingListButton from "../components/ReadingListButton";
 
 const SingleBookPage = () => {
   const { id } = useParams();
@@ -85,6 +86,7 @@ const SingleBookPage = () => {
                 getBook()?.is_awesome ? "" : "not "
               } awesome
             </span>
+            <ReadingListButton id={getBook()?.id} />
           </div>
           <img src={getBook()?.cover} style={{
             maxWidth: "100%"
